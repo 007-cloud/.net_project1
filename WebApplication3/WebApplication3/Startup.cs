@@ -53,6 +53,10 @@ namespace WebApplication3
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Hello}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "movie",
+                    template: "Movies/{action}/{number:int}",
+                    defaults: new { Controller = "Movies" });
             });
             app.UseRouting();
 
