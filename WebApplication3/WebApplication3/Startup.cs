@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebApplication3.Data;
 
 namespace WebApplication3
 {
@@ -17,7 +19,13 @@ namespace WebApplication3
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(option => option.EnableEndpointRouting = false);
+            services.AddDbContext<MoviesContext>(options =>
+            {
+                options.UseSqlite("Filename=movies.db");
+            });
+            services.AddMvc();
         }
+        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -26,6 +34,7 @@ namespace WebApplication3
             {
                 app.UseDeveloperExceptionPage();
             }
+            
 
             app.UseMvc(routes =>
             {
